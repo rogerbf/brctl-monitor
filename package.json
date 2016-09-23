@@ -44,5 +44,13 @@
       "es2015"
     ]
   },
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rogerbf/brctl-monitor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rogerbf/brctl-monitor/issues"
+  },
+  "homepage": "https://github.com/rogerbf/brctl-monitor#readme"
 }
