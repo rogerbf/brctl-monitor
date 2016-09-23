@@ -1,0 +1,48 @@
+{
+  "name": "brctl-monitor",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "echo 'no tests'",
+    "prebuild": "npm test && rimraf dist",
+    "build": "babel --ignore *.test.js --out-dir dist src",
+    "prepublish": "npm run build",
+    "start": "npm run build && node ./dist/index.js",
+    "start:watch": "nodemon --watch src -x npm run start"
+  },
+  "keywords": [],
+  "author": "rogerbf <roger@bergfalk.nu> (http://bergfalk.nu/)",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "6.14.0",
+    "babel-preset-es2015": "6.14.0",
+    "nodemon": "1.10.2",
+    "rimraf": "2.5.4"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "eslintConfig": {
+    "env": {
+      "node": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "quotes": [
+        "error",
+        "backtick"
+      ]
+    }
+  },
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "dependencies": {}
+}

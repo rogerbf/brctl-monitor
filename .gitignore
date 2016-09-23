@@ -1,0 +1,6 @@
+node_modules
+dist
+.DS_Store
+package
+brctl-monitor*.tgz
+npm-debug.log
