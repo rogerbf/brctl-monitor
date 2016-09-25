@@ -2,6 +2,7 @@ const spawn = require(`child_process`).spawn
 const stream = require(`stream`)
 const os = require(`os`)
 const path = require(`path`)
+const split = require(`./split.js`)
 
 const defaultOptions = {
   scope: `both`,
@@ -29,6 +30,10 @@ const spawnInstance = userOptions => {
 
 module.exports = spawnInstance
 
+// spawnInstance({ directory: `test` })
+//   .then(instance => instance.stdout.on(`data`, data => console.log(data.toString())))
+//   .catch(e => console.log(e.toString()))
+
 spawnInstance({ directory: `test` })
-  .then(instance => instance.stdout.on(`data`, data => console.log(data.toString())))
+  .then(instance => instance.stdout.pipe(split).pipe(process.stdout))
   .catch(e => console.log(e.toString()))
