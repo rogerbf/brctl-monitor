@@ -44,7 +44,9 @@
       "es2015"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "object-from-string": "0.0.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rogerbf/brctl-monitor.git"
