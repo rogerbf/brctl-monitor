@@ -25,7 +25,10 @@ const spawnInstance = userOptions => {
     const instance = spawn(`brctl`, args)
 
     process.on(`exit`, () => instance.kill())
-    process.on(`uncaughtException`, () => instance.kill())
+    process.on(`uncaughtException`, err => {
+      instance.kill()
+      throw err
+    })
 
     instance.on(`error`, err => reject(err))
 
