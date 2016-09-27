@@ -23,7 +23,35 @@ const parseStatusLine = line => {
 }
 
 const parseFiles = fileString => {
-  return { files: fileString.split(`\n o `).slice(1) }
+  const parsed = fileString
+    .split(`\n o `)
+    .slice(1)
+    .map(file => {
+      const parts = file.split(` `)
+      return {
+        path: parts[0],
+        status: parts.slice(1).join(` `)
+      }
+    })
+    .map(file => {
+      switch (file.status[0]) {
+        case `☁`:
+        return Object.assign({}, file, { status: { state: `synchronized`, raw: file.status } })
+        break;
+        case `↑`:
+        return Object.assign({}, file, { status: { state: `uploading`, raw: file.status } })
+        break;
+        default:
+        if (/^\(Waiting/.test(file.status)) {
+          return Object.assign({}, file, { status: { state: `waiting`, raw: file.status, message: file.status.slice(file.status.indexOf(`)`) + 1).trim() } })
+        } else {
+          return Object.assign({}, file, { status: { state: `unknown`, raw: file.status } })
+        }
+      }
+    })
+  return {
+    files: parsed
+  }
 }
 
 const parseState = new Transform({

@@ -40,6 +40,6 @@ module.exports = spawnInstance
 
 spawnInstance({ directory: `test` })
   .then(brctl => {
-    brctl.state.on(`data`, data => console.log(data))
+    brctl.state.on(`data`, data => console.log(JSON.stringify(data, null, 2)))
   })
   .catch(e => console.log(e.toString()))
