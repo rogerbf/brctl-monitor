@@ -35,6 +35,11 @@ const parseBytes = str => {
   }
 }
 
+const parseProgress = str => {
+  // "↑ 793 K (793150) 95.0%"
+  return str.slice(str.lastIndexOf(` `)).trim()
+}
+
 const parseFiles = fileString => {
   const parsed = fileString
     .split(/\n\so\s/) // file listing starts with: '\n o '
@@ -63,8 +68,7 @@ const parseFiles = fileString => {
           { status: {
               state: `uploading`,
               bytes: parseBytes(file.status),
-              // progress: file.status.split(/\s/).reverse()[0],
-              progress: file.status.slice(file.status.lastIndexOf(` `)).trim(),
+              progress: parseProgress(file.status),
               raw: file.status
             }
           }
