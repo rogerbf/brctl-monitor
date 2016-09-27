@@ -26,7 +26,7 @@ const consolidateChunks = Object.assign(
 
       // check if chunk contains complete file-list
       if (stop >= 0) {
-        // push entire state onto stream
+        // push complete state (queued chunks and current chunk) onto stream
         this.push(Buffer.concat([this.queue, chunk.slice(0, stop)]))
         // reset queue, removing unwanted data
         this.queue = Buffer.alloc(0)

@@ -1,27 +1,3 @@
-const Transform = require(`stream`).Transform
-const objectFromString = require(`object-from-string`)(`:`)
-
-const extractStatusAndFileStrings = chunk => {
-  const chunkString = chunk.toString()
-  const date = new RegExp(/\d{4}-\d{2}-\d{2}/)
-  const filesDivider = chunkString.match(/\n\so\s/).index
-  return {
-    status: chunkString.slice(chunkString.match(date).index, filesDivider),
-    files: chunkString.slice(filesDivider)
-  }
-}
-
-const parseStatusLine = line => {
-  const timeStatusDivider = line.match(/\+\d{4}/).index + 5
-  const timestamp = line.slice(0, timeStatusDivider).trim()
-  const status = line.slice(timeStatusDivider).trim()
-    .split(/\s/)
-    .reduce((acc, el) => {
-      return Object.assign(acc, objectFromString(el))
-    }, {})
-  return { timestamp, status}
-}
-
 const parseBytes = str => {
   if (/\(\d*\)/.test(str)) {
     // "↑ 793 K (793150) 95.0%"
@@ -40,7 +16,7 @@ const parseProgress = str => {
   return str.slice(str.lastIndexOf(` `)).trim()
 }
 
-const parseFiles = fileString => {
+const separateFiles = fileString => {
   const parsed = fileString
     .split(/\n\so\s/) // file listing starts with: '\n o '
     .slice(1) // first element is empty
@@ -56,15 +32,26 @@ const parseFiles = fileString => {
       }
     })
     .map(file => {
-      // TODO: missing state - downloading
       // {
-      //   "path": "/com~apple~CloudDocs/roger",
-      //     "status": {
-      //       "state": "synchronized",
-      //       "raw": "☁ ↓ 0 K 0.0%  server edit to download"
-      //     }
+      //   "path": "/com~apple~CloudDocs/file",
+      //   "status": {
+      //     "state": "synchronized",
+      //     "raw": "☁ ↓ 0 K 0.0%  server edit to download"
+      //   }
+      // }
+      //
+      // {
+      //   "path": "/com~apple~CloudDocs/file",
+      //   "status": {
+      //     "state": "uploading",
+      //     "bytes": "6",
+      //     "progress": "download",
+      //     "raw": "↑ 6 byte 95.0%  ↓ 0 K 0.0%  server edit to download"
+      //   }
       // }
       // TODO: consider renaming ☁ -> in cloud
+      // TODO: missing state - downloading
+      // TODO: consider replacing state: uploading with synchronizing
       if (/☁/.test(file.status)) {
         return Object.assign(
           {}, file, { status: { state: `synchronized`, raw: file.status } }
@@ -105,19 +92,4 @@ const parseFiles = fileString => {
   }
 }
 
-const parseState = new Transform({
-  transform(chunk, encoding, callback) {
-    const strings = extractStatusAndFileStrings(chunk)
-    this.push(
-      Object.assign(
-        {},
-        parseStatusLine(strings.status),
-        parseFiles(strings.files)
-      )
-    )
-    callback()
-  },
-  objectMode: true
-})
-
-module.exports = parseState
+module.exports = separateFiles

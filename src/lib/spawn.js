@@ -1,8 +1,8 @@
 const spawn = require(`child_process`).spawn
 const os = require(`os`)
 const path = require(`path`)
-const consolidateChunks = require(`./consolidateChunksTransform.js`)
-const parseState = require(`./parseState.js`)
+const consolidateChunks = require(`./consolidateChunks.js`)
+const parse = require(`./parse.js`)
 
 const defaultOptions = {
   scope: `both`,
@@ -33,8 +33,8 @@ const spawnInstance = userOptions => {
     instance.on(`error`, err => reject(err))
 
     instance.stdout.once(`readable`, () => {
-      instance.stdout.pipe(consolidateChunks).pipe(parseState)
-      resolve(Object.assign(instance, { state: parseState }))
+      instance.stdout.pipe(consolidateChunks).pipe(parse)
+      resolve(Object.assign(instance, { state: parse }))
     })
   })
 }
