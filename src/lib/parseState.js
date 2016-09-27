@@ -56,6 +56,15 @@ const parseFiles = fileString => {
       }
     })
     .map(file => {
+      // TODO: missing state - downloading
+      // {
+      //   "path": "/com~apple~CloudDocs/roger",
+      //     "status": {
+      //       "state": "synchronized",
+      //       "raw": "☁ ↓ 0 K 0.0%  server edit to download"
+      //     }
+      // }
+      // TODO: consider renaming ☁ -> in cloud
       if (/☁/.test(file.status)) {
         return Object.assign(
           {}, file, { status: { state: `synchronized`, raw: file.status } }
