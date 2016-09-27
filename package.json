@@ -1,7 +1,7 @@
 {
   "name": "brctl-monitor",
   "version": "0.0.1",
-  "description": "",
+  "description": "monitor the CloudDocs deamon",
   "main": "./dist/index.js",
   "scripts": {
     "test": "echo 'no tests'",
