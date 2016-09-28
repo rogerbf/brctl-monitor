@@ -16,8 +16,9 @@ const parseProgress = str => {
   return str.slice(str.lastIndexOf(` `)).trim()
 }
 
-const separateFiles = fileString => {
-  const parsed = fileString
+const separateFiles = str => {
+  const parsed = str
+    // TODO if filestring is empty or null?
     .split(/\n\so\s/) // file listing starts with: '\n o '
     .slice(1) // first element is empty
     .map(file => {

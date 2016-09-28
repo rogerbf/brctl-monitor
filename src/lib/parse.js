@@ -4,9 +4,9 @@ const decomposeHeader = require(`./decomposeHeader.js`)
 const separateFiles = require(`./separateFiles.js`)
 
 const parse = new Transform({
-  transform(chunk, encoding, callback) {
+  transform(chunk, encoding, next) {
 
-    const chunkString = chunk.toString()
+    const chunkStringified = chunk.toString()
     // observing in /Users/user/Library/Mobile Documents for the docs scope(s)
     // 2016-09-27 12:59:10 +0000 total:4
     //  o /com~apple~Automator/Documents/Sleep.app ☁
@@ -14,7 +14,7 @@ const parse = new Transform({
     //  o /com~apple~Automator/Documents/Shut Down.app ☁
     //  o /iCloud~com~apple~iBooks/Documents/The Good Parts.pdf ☁
 
-    const sections = separateSections(chunkString)
+    const sections = separateSections(chunkStringified)
     // {
     //   head: '2016-09-27 12:59:10 +0000 total:4',
     //   files: '\n o /com~apple~Automator/Documents/Sleep.app ☁'...
@@ -24,11 +24,11 @@ const parse = new Transform({
       Object.assign(
         {},
         decomposeHeader(sections.head), // { timestamp, stats }
-        separateFiles(sections.files) // [ {} ]
+        separateFiles(sections.files) // { files: [ {}, ... ] }
       )
     )
 
-    callback()
+    next()
   },
   objectMode: true
 })
