@@ -4,13 +4,15 @@
   "description": "monitor the CloudDocs deamon",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "babel-node ./src/index.test.js | faucet",
+    "test": "babel-node ./src/index.test.js | tap-spec",
+    "test:lib": "babel-node ./src/lib.test.js | tap-spec",
     "prebuild": "npm test && rimraf dist",
     "build": "babel --ignore *.test.js --out-dir dist src",
     "prepublish": "npm run build",
     "start": "npm run build && node ./dist/index.js",
     "start:watch": "nodemon --watch src -x npm run start",
-    "watch:test": "nodemon -x 'npm test'"
+    "watch:test": "nodemon -x 'npm test'",
+    "watch:test:lib": "nodemon -x 'npm run test:lib'"
   },
   "keywords": [],
   "author": "rogerbf <roger@bergfalk.nu> (http://bergfalk.nu/)",
@@ -21,6 +23,7 @@
     "faucet": "0.0.1",
     "nodemon": "1.10.2",
     "rimraf": "2.5.4",
+    "tap-spec": "4.1.1",
     "tape": "4.6.0"
   },
   "files": [
@@ -48,7 +51,8 @@
     ]
   },
   "dependencies": {
-    "object-from-string": "0.0.1"
+    "object-from-string": "0.0.1",
+    "recursive-buffer-split": "0.0.1"
   },
   "repository": {
     "type": "git",
