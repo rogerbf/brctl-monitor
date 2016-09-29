@@ -1,5 +1,3 @@
-const objectFromString = require(`object-from-string`)(`:`)
-
 const decomposeHead = str => {
   // str: '2016-09-27 12:59:10 +0000 total:4 added:1'
 

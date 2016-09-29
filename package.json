@@ -51,7 +51,6 @@
     ]
   },
   "dependencies": {
-    "object-from-string": "0.0.1",
     "recursive-buffer-split": "0.0.1"
   },
   "repository": {
