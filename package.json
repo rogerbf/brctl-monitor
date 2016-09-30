@@ -4,7 +4,7 @@
   "description": "monitor the CloudDocs deamon",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "tape -r babel-register ./src/tests/*.js | tap-spec",
+    "test": "tape -r babel-register ./src/tests/*.js | tap-dot",
     "prebuild": "npm test && rimraf dist",
     "build": "babel --ignore *test.js --out-dir dist src",
     "prepublish": "npm run build",
@@ -18,10 +18,9 @@
   "devDependencies": {
     "babel-cli": "6.14.0",
     "babel-preset-es2015": "6.14.0",
-    "faucet": "0.0.1",
     "nodemon": "1.10.2",
     "rimraf": "2.5.4",
-    "tap-spec": "4.1.1",
+    "tap-dot": "1.0.5",
     "tape": "4.6.0"
   },
   "files": [
