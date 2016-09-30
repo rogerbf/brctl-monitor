@@ -4,15 +4,13 @@
   "description": "monitor the CloudDocs deamon",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "babel-node ./src/index.test.js | tap-spec",
-    "test:lib": "babel-node ./src/lib.test.js | tap-spec",
+    "test": "tape -r babel-register ./src/tests/*.js | tap-spec",
     "prebuild": "npm test && rimraf dist",
-    "build": "babel --ignore *.test.js --out-dir dist src",
+    "build": "babel --ignore *test.js --out-dir dist src",
     "prepublish": "npm run build",
     "start": "npm run build && node ./dist/index.js",
     "start:watch": "nodemon --watch src -x npm run start",
-    "watch:test": "nodemon -x 'npm test'",
-    "watch:test:lib": "nodemon -x 'npm run test:lib'"
+    "watch:test": "nodemon -x 'npm test'"
   },
   "keywords": [],
   "author": "rogerbf <roger@bergfalk.nu> (http://bergfalk.nu/)",
