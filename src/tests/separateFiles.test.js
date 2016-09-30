@@ -1,6 +1,5 @@
-import tape from 'tape'
+import test from 'tape'
 import separateFiles from '../lib/separateFiles.js'
-const test = tape
 
 test(`separateFiles`, assert => {
 

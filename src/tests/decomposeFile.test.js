@@ -1,6 +1,5 @@
-import tape from 'tape'
+import test from 'tape'
 import decomposeFile from '../lib/decomposeFile.js'
-const test = tape
 
 /*
 /test 2 (Waiting for upload)\n		 upload error: offline

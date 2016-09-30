@@ -1,6 +1,5 @@
-import tape from 'tape'
+import test from 'tape'
 import consolidateChunks from '../lib/consolidateChunks.js'
-const test = tape
 
 test(`consolidateChunks`, assert => {
 

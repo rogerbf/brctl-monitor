@@ -1,6 +1,5 @@
-import tape from 'tape'
+import test from 'tape'
 import isolateSections from '../lib/isolateSections.js'
-const test = tape
 
 test(`isolateSections`, assert =>  {
 

@@ -1,6 +1,5 @@
-import tape from 'tape'
+import test from 'tape'
 import decomposeHead from '../lib/decomposeHead.js'
-const test = tape
 
 test(`decomposeHead`, assert =>  {
 
