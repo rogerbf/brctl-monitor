@@ -1,5 +1,7 @@
 const extractTransferData = (str, type) => {
 
+  if (!str) return null
+
   let start = undefined
 
   switch (type) {
