@@ -35,7 +35,7 @@ const deconstructTransferData = str => {
       // immediately followed by a '%'-character
       str.match(/\s\d*[?=\.]\d*[?=%]/).index,
       str.indexOf(`%`)).trim()
-    )
+    , 10)
 
   const size = parseInt(
     // contains a '(' followed by any number och digit characters
@@ -44,7 +44,7 @@ const deconstructTransferData = str => {
     ? str.slice(str.indexOf(`(`) + 1, str.indexOf(`)`))
     // starts and ends with a digit character with any amount between
     : str.split(/\s/).filter(s => s.match(/^\d*\d$/))[0]
-  )
+  , 10)
 
   return {
     progress,
