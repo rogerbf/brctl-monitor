@@ -2,6 +2,7 @@ const spawn = require(`child_process`).spawn
 const os = require(`os`)
 const path = require(`path`)
 const consolidateChunks = require(`./consolidateChunks.js`)()
+const parser = require(`./parser.js`)
 
 const defaultOptions = {
   scope: `both`,
@@ -34,8 +35,8 @@ const spawnInstance = userOptions => {
     instance.on(`error`, err => reject(err))
 
     instance.stdout.once(`readable`, () => {
-      instance.stdout.pipe(consolidateChunks)
-      resolve(Object.assign(instance, { state: consolidateChunks }))
+      instance.stdout.pipe(consolidateChunks).pipe(parser)
+      resolve(Object.assign(instance, { state: parser }))
     })
   })
 }
@@ -45,6 +46,6 @@ module.exports = spawnInstance
 // spawnInstance({ directory: `test` })
 spawnInstance({ directory: `temp2` })
   .then(brctl => {
-    brctl.state.on(`data`, data => console.log(`${data.toString()}`))
+    brctl.state.on(`data`, data => console.log(JSON.stringify(data, null, 2)))
   })
   .catch(e => console.log(e.toString()))
