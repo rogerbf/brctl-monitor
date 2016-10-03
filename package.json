@@ -17,6 +17,8 @@
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "6.14.0",
+    "babel-plugin-transform-es2015-destructuring": "6.16.0",
+    "babel-plugin-transform-object-rest-spread": "6.16.0",
     "babel-preset-es2015": "6.14.0",
     "nodemon": "1.10.2",
     "rimraf": "2.5.4",
@@ -33,7 +35,10 @@
     },
     "parserOptions": {
       "ecmaVersion": 6,
-      "sourceType": "module"
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true
+      }
     },
     "rules": {
       "quotes": [
@@ -45,6 +50,10 @@
   "babel": {
     "presets": [
       "es2015"
+    ],
+    "plugins": [
+      "transform-es2015-destructuring",
+      "transform-object-rest-spread"
     ]
   },
   "dependencies": {
