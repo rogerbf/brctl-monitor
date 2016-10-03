@@ -10,7 +10,7 @@ module.exports = new Transform({
     const sections = isolateSections(cstr)
     const head = decomposeHead(sections.head)
     const files = separateFiles(sections.files).map(decomposeFile)
-    this.push(Object.assign({}, head, files))
+    this.push({ ...head, ...files })
     next()
   },
   objectMode: true
