@@ -1,8 +1,7 @@
 const spawn = require(`child_process`).spawn
 const os = require(`os`)
 const path = require(`path`)
-const consolidateChunks = require(`./consolidateChunks.js`)
-const parse = require(`./parse.js`)
+const consolidateChunks = require(`./consolidateChunks.js`)()
 
 const defaultOptions = {
   scope: `both`,
@@ -16,6 +15,8 @@ const spawnInstance = userOptions => {
   const directory = options.directory
     ? path.join(baseDirectory, `/com~apple~CloudDocs`, options.directory)
     : null
+
+  // console.log(`directory: ${directory}`)
 
   const args = directory
     ? [`monitor`, `--scope=${options.scope.toUpperCase()}`, directory]
@@ -33,8 +34,8 @@ const spawnInstance = userOptions => {
     instance.on(`error`, err => reject(err))
 
     instance.stdout.once(`readable`, () => {
-      instance.stdout.pipe(consolidateChunks).pipe(parse)
-      resolve(Object.assign(instance, { state: parse }))
+      instance.stdout.pipe(consolidateChunks)
+      resolve(Object.assign(instance, { state: consolidateChunks }))
     })
   })
 }
@@ -42,8 +43,8 @@ const spawnInstance = userOptions => {
 module.exports = spawnInstance
 
 // spawnInstance({ directory: `test` })
-spawnInstance({ scope: `docs` })
+spawnInstance({ directory: `temp2` })
   .then(brctl => {
-    brctl.state.on(`data`, data => console.log(JSON.stringify(data, null, 2)))
+    brctl.state.on(`data`, data => console.log(`${data.toString()}`))
   })
   .catch(e => console.log(e.toString()))
