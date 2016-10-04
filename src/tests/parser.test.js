@@ -1,8 +1,10 @@
 import test from 'tape'
 import parser from '../lib/parser.js'
 
+const instance = parser()
+
 test(`is a Transform stream`, assert => {
-  assert.ok(parser.constructor.name === `Transform`)
+  assert.ok(instance.constructor.name === `Transform`)
   assert.end()
 })
 
@@ -26,11 +28,11 @@ test(`return expected data`, assert => {
     }
   }
 
-  parser.on(`data`, parsedData => {
+  instance.on(`data`, parsedData => {
     assert.equal(parsedData.timestamp, expected.timestamp)
     assert.deepEqual(parsedData.stats, expected.stats)
     assert.end()
   })
 
-  parser.write(data)
+  instance.write(data)
 })
