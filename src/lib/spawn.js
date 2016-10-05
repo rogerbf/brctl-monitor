@@ -17,13 +17,12 @@ const spawnInstance = userOptions => {
     ? path.join(baseDirectory, `/com~apple~CloudDocs`, options.directory)
     : null
 
-  console.log(`directory: ${directory}`)
-
   const args = directory
     ? [`monitor`, `--scope=${options.scope.toUpperCase()}`, directory]
     : [`monitor`, `--scope=${options.scope.toUpperCase()}`]
 
   return new Promise((resolve, reject) => {
+
     const instance = spawn(`brctl`, args)
 
     process.on(`exit`, () => instance.kill())
@@ -45,10 +44,3 @@ const spawnInstance = userOptions => {
 }
 
 module.exports = spawnInstance
-
-// spawnInstance({ directory: `test` })
-spawnInstance()
-  .then(brctl => {
-    brctl.state.on(`data`, data => console.log(JSON.stringify(data, null, 2)))
-  })
-  .catch(e => console.log(e.toString()))
