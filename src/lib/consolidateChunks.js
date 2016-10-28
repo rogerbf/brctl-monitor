@@ -1,7 +1,7 @@
 const Transform = require(`stream`).Transform
 const split = require(`recursive-buffer-split`)
 
-const newline = Buffer(`\n`)
+const newline = Buffer.from(`\n`)
 
 module.exports = () =>
   Object.assign(
@@ -12,7 +12,7 @@ module.exports = () =>
 
         const processed = arr.reduce((acc, c) => {
           if (c.indexOf(` o `) >= 0 || c.indexOf(`total:`) >= 0) {
-            return Buffer.concat([acc, c, Buffer(`\n`)])
+            return Buffer.concat([ acc, c, newline ])
           } else {
             return acc
           }
@@ -24,7 +24,7 @@ module.exports = () =>
           this.push(processed)
           this.queue = Buffer.alloc(0)
         } else {
-          this.queue = Buffer.concat([this.queue, processed])
+          this.queue = Buffer.concat([ this.queue, processed ])
         }
 
         next()
