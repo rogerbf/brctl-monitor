@@ -1,6 +1,6 @@
 {
   "name": "brctl-monitor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "monitor the CloudDocs deamon",
   "main": "./dist/index.js",
   "scripts": {
@@ -13,7 +13,12 @@
     "watch:test": "nodemon -x 'npm test'",
     "repl": "babel-node"
   },
-  "keywords": ["brctl", "clouddocs", "icloud", "drive"],
+  "keywords": [
+    "brctl",
+    "clouddocs",
+    "icloud",
+    "drive"
+  ],
   "author": "rogerbf <roger@bergfalk.nu> (http://bergfalk.nu/)",
   "license": "MIT",
   "devDependencies": {
@@ -58,7 +63,7 @@
     ]
   },
   "dependencies": {
-    "recursive-buffer-split": "0.0.1"
+    "recursive-buffer-split": "1.0.0"
   },
   "repository": {
     "type": "git",
